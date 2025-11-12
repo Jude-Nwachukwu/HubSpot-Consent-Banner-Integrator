@@ -1,4 +1,4 @@
-# HubSpot Consent Banner Integrator (GTM Custom Tag Template)
+# Unofficial HubSpot Consent Banner Integrator (GTM Custom Tag Template)
 
 The **HubSpot Consent Banner Integrator** is a Google Tag Manager (GTM) custom tag template that lets you control and synchronize HubSpot's cookie consent banner with your website’s consent management system or Google Consent Mode signals.  
 
