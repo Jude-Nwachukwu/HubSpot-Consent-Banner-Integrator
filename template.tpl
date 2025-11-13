@@ -49,6 +49,14 @@ ___TEMPLATE_PARAMETERS___
       {
         "value": "hsRevokeCookieConsent",
         "displayValue": "Revoke Cookie Consent"
+      },
+      {
+        "value": "hsDonotTrack",
+        "displayValue": "Do Not Track Signal"
+      },
+      {
+        "value": "hsDisableDonotTrack",
+        "displayValue": "Disable Do Not Track Cookie"
       }
     ],
     "simpleValueType": true,
@@ -217,6 +225,7 @@ ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 // HubSpot Consent Banner Integrator
 const isConsentGranted = require('isConsentGranted');
 const createQueue = require('createQueue');
+const getCookieValues = require('getCookieValues');
 const logToConsole = require('logToConsole');
 
 // Access template fields
@@ -224,8 +233,9 @@ const hsAction = data.hsCookieBannerAction;
 const hsIntegration = data.hsCookieBannerIntegration;
 const loggingEnabled = !data.disableConsoleLogging;
 
-// Create or connect to HubSpot queue safely
+// Create or connect to HubSpot queues safely
 const hubspotQueuePush = createQueue('_hsp');
+const hubspotDoNotTrackQueuePush = createQueue('_hsq');
 
 // Helper function to normalize consent values
 function normalizeConsent(value) {
@@ -286,6 +296,21 @@ if (hsAction === 'hsRevokeCookieConsent') {
       advertisement: advertisementConsent,
       functionality: functionalityConsent,
     });
+  }
+
+} else if (hsAction === 'hsDonotTrack') {
+  // Trigger HubSpot Do Not Track signal
+  hubspotDoNotTrackQueuePush(['doNotTrack']);
+  if (loggingEnabled) logToConsole('HubSpot Do Not Track signal executed.');
+
+} else if (hsAction === 'hsDisableDonotTrack') {
+  // Disable the Do Not Track cookie if it exists
+  const doNotTrackCookie = getCookieValues('__hs_do_not_track');
+  if (doNotTrackCookie && doNotTrackCookie.length > 0) {
+    hubspotDoNotTrackQueuePush(['doNotTrack', { track: true }]);
+    if (loggingEnabled) logToConsole('HubSpot Do Not Track cookie disabled.');
+  } else if (loggingEnabled) {
+    logToConsole('No __hs_do_not_track cookie found — skipping disable action.');
   }
 }
 
@@ -389,6 +414,45 @@ ___WEB_PERMISSIONS___
                   {
                     "type": 1,
                     "string": "disableHubSpotCookieBanner"
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  },
+                  {
+                    "type": 8,
+                    "boolean": false
+                  }
+                ]
+              },
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "key"
+                  },
+                  {
+                    "type": 1,
+                    "string": "read"
+                  },
+                  {
+                    "type": 1,
+                    "string": "write"
+                  },
+                  {
+                    "type": 1,
+                    "string": "execute"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "_hsq"
                   },
                   {
                     "type": 8,
@@ -528,6 +592,39 @@ ___WEB_PERMISSIONS___
       "isEditedByUser": true
     },
     "isRequired": true
+  },
+  {
+    "instance": {
+      "key": {
+        "publicId": "get_cookies",
+        "versionId": "1"
+      },
+      "param": [
+        {
+          "key": "cookieAccess",
+          "value": {
+            "type": 1,
+            "string": "specific"
+          }
+        },
+        {
+          "key": "cookieNames",
+          "value": {
+            "type": 2,
+            "listItem": [
+              {
+                "type": 1,
+                "string": "__hs_do_not_track"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "clientAnnotations": {
+      "isEditedByUser": true
+    },
+    "isRequired": true
   }
 ]
 
@@ -539,6 +636,6 @@ scenarios: []
 
 ___NOTES___
 
-Created on 11/12/2025, 11:33:56 PM
+Created on 11/13/2025, 1:40:15 PM
 
 
