@@ -6,7 +6,6 @@ This template simplifies how you handle consent categories (Analytics, Advertise
 
 Developed with ❤️ by **Jude Nwachukwu Onyejekwe** and the **DumbData Team** for **[DumbData](https://dumbdata.co/)**. 
 
-
 ---
 
 ## 🚀 Features
@@ -25,6 +24,12 @@ Developed with ❤️ by **Jude Nwachukwu Onyejekwe** and the **DumbData Team** 
 
 - **Revoke Cookie Consent**  
   Programmatically revoke all HubSpot tracking consent, resetting the visitor’s consent state.
+
+- **Do Not Track Signal**  
+  Programmatically set HubSpot’s Do Not Track state to prevent all tracking activity for the current visitor session.
+
+- **Disable Do Not Track Cookie**  
+  Removes or disables HubSpot’s `__hs_do_not_track` cookie when it exists, allowing HubSpot tracking to resume.
 
 - **Optional Console Logging**  
   Enable or disable console output for debugging directly from the tag configuration.
@@ -57,6 +62,10 @@ Choose the primary action you want to perform using the **Select HubSpot Cookie 
   Programmatically trigger the HubSpot banner to appear.
 - **Revoke Cookie Consent**  
   Reset all HubSpot cookie consent states.
+- **Do Not Track Signal**  
+  Executes HubSpot’s Do Not Track function, preventing HubSpot from setting tracking cookies.
+- **Disable Do Not Track Cookie**  
+  Detects if the `__hs_do_not_track` cookie exists and disables it, allowing tracking again.
 
 ---
 
@@ -122,6 +131,20 @@ This will clear HubSpot tracking cookies and reset consent preferences.
 
 ---
 
+### 🟠 Use Case 5: Respect Do Not Track Preferences
+If a user opts out of all tracking, select:
+- **Action:** *Do Not Track Signal*  
+This will trigger HubSpot’s built-in Do Not Track mechanism and prevent data collection for that session.
+
+---
+
+### 🟣 Use Case 6: Disable Do Not Track Cookie
+If you later need to re-enable HubSpot tracking after the Do Not Track cookie has been set:
+- **Action:** *Disable Do Not Track Cookie*  
+This will detect the `__hs_do_not_track` cookie and remove its restriction, allowing HubSpot tracking again.
+
+---
+
 ## 🪪 License
 This GTM template is distributed under the **Apache 2.0 License**.  
 See the [LICENSE](./LICENSE) file for details.
@@ -129,5 +152,5 @@ See the [LICENSE](./LICENSE) file for details.
 ---
 
 ## 👤 Author
-Developed with ❤️ by **Jude Nwachukwu Onyejekwe** and the **DumbData Team** for **[DumbData](https://dumbdata.co/)**. 
+Developed with ❤️ by **Jude Nwachukwu Onyejekwe** and the **DumbData Team** for **[DumbData](https://dumbdata.co/)**.  
 Designed for privacy-friendly, compliant integration between **HubSpot** and **Google Tag Manager**.
