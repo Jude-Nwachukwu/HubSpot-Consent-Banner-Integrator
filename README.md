@@ -11,7 +11,7 @@ Developed with ❤️ by **Jude Nwachukwu Onyejekwe** and the **DumbData Team** 
 ## 🚀 Features
 
 - **Integrate Third-Party Consent Banners**  
-  Seamlessly link your external consent banner or CMP with HubSpot using either manual signals or Google Consent Mode.
+  Seamlessly link your external consent banner or Consent Management Platform (CMP) with HubSpot using either manual signals or Google Consent Mode.
 
 - **Use Google Consent Mode Signals**  
   Automatically sync HubSpot consent categories (`analytics`, `advertisement`, `functionality`) with their respective Google Consent Mode states.
