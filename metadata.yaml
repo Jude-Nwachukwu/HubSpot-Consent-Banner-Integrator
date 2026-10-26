@@ -1,0 +1,6 @@
+---
+homepage: https://dumbdata.co/
+documentation: https://github.com/Jude-Nwachukwu/HubSpot-Consent-Banner-Integrator
+versions:
+  - sha: b9c0ccb86557939cac8c258096cfb013de81497c
+    changeNotes: Initial release.
